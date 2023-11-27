@@ -13,9 +13,17 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.OIConstants;
+
 
 /** An example command that uses an example subsystem. */
 public class SwerveJoystickCmd extends CommandBase {
+
+  private final SwerveSubsystem swerveSubsystem;
+  private final Supplier<Double> xSpdFunction, ySpdFunction, turningSpdFunction;
+  private final Supplier<Boolean> fieldOrientedFunction;
+  private final SlewRateLimiter xLimiter, yLimiter, turningLimiter;
+
 
   public SwerveJoystickCmd(SwerveSubsystem swerveSubsystem,
   Supplier<Double> xSpdFunction, Supplier<Double> ySpdFunction, 
@@ -42,9 +50,9 @@ public class SwerveJoystickCmd extends CommandBase {
     double ySpeed = ySpdFunction.get();
     double turningSpeed = turningSpdFunction.get();
 
-    xSpeed = Math.abs(xSpeed) > OIConstants.kDeadband ? xSpeed ; 0.0;
-    ySpeed = Math.abs(ySpeed) > OIConstants.kDeadband ? ySpeed ; 0.0;
-    turningSpeed = Math.abs(turningSpeed) > OIConstants.kDeadband ? turningSpeed ; 0.0;
+    xSpeed = Math.abs(xSpeed) > OIConstants.kDeadband ? xSpeed : 0.0;
+    ySpeed = Math.abs(ySpeed) > OIConstants.kDeadband ? ySpeed : 0.0;
+    turningSpeed = Math.abs(turningSpeed) > OIConstants.kDeadband ? turningSpeed : 0.0;
 
     xSpeed = xLimiter.calculate(xSpeed) * DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
     ySpeed = yLimiter.calculate(ySpeed) * DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
@@ -52,7 +60,7 @@ public class SwerveJoystickCmd extends CommandBase {
 
     ChassisSpeeds chassisSpeeds;
     if (fieldOrientedFunction.get()){
-      chassisSpeeds = chassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, turningSpeed, SwerveSubsystem.getRotation2d());
+      chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, turningSpeed, SwerveSubsystem.getRotation2d());
     }
     else{
       chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, turningSpeed);

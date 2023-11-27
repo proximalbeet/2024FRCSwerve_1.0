@@ -3,10 +3,14 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.sensors.Pigeon2;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
+
+
 
 public class SwerveSubsystem extends SubsystemBase {
     private final SwerveModule frontLeft = new SwerveModule(
@@ -44,8 +48,9 @@ public class SwerveSubsystem extends SubsystemBase {
             DriveConstants.kBackRightDriveAbsoluteEncoderPort,
             DriveConstants.kBackRightDriveAbsoluteEncoderOffsetRad,
             DriveConstants.kBackRightDriveAbsoluteEncoderReversed);
-
-    private final Pigeon2 gyro = new Pigeon2();
+    
+    //Gets our Gyro and it's CAN number (the number is what number is assigned to it on the CAN bus)
+    private final static Pigeon2 gyro = new Pigeon2(0);
 
     public SwerveSubsystem(){
         new Thread(() -> {
@@ -62,11 +67,11 @@ public class SwerveSubsystem extends SubsystemBase {
         gyro.reset();
     }
 
-    public double getHeading(){
+    public static double getHeading(){
         return Math.IEEEremainder(gyro.getAngle(), 360);
     }
 
-    public getRotation2d(){
+    public static Rotation2d getRotation2d(){
         return Rotation2d.fromDegrees(getHeading());
     }
 
@@ -83,7 +88,7 @@ public class SwerveSubsystem extends SubsystemBase {
     }
 
     public void setModuleStates(SwerveModuleState[] desiredStates){
-        swerveDriveKinematics.normalizeWheelSpeeds(desiredStates, DriveConstants.kPhysicalMaxSpeedMetersPerSecond)
+        SwerveDriveKinematics.normalizeWheelSpeeds(desiredStates, DriveConstants.kPhysicalMaxSpeedMetersPerSecond);
         frontLeft.setDesiredState(desiredStates[0]);
         frontRight.setDesiredState(desiredStates[1]);
         backLeft.setDesiredState(desiredStates[2]);
