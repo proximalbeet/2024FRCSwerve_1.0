@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
-import com.ctre.phoenix.sensors.Pigeon2;
+import com.ctre.phoenixpro.hardware.Pigeon2;
+
 //import edu.wpi.first.wpilibj.interfaces.*;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
@@ -64,14 +65,13 @@ public class SwerveSubsystem extends SubsystemBase {
     public void zeroHeading(){
         // Find out if this has changed to some other method
         //gyro.reset();
-        gyro.configFactoryDefault();
+        gyro.reset();
         
         
     }
 
     public static double getHeading(){
-        return gyro.getCompassHeading(); // This is a guess at a replacement for below
-        //return Math.IEEEremainder(gyro.getAngle(), 360);
+        return Math.IEEEremainder(gyro.getAngle(), 360);
     }
 
     public static Rotation2d getRotation2d(){
