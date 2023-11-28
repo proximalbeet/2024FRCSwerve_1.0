@@ -1,7 +1,9 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.sensors.CANCoder;
+import com.ctre.phoenixpro.hardware.CANcoder;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -14,6 +16,7 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.ModuleConstants;
 
 public class SwerveModule {
+
     // Motors
     private final CANSparkMax driveMotor;
     private final CANSparkMax turningMotor;
@@ -41,8 +44,13 @@ public class SwerveModule {
         driveMotor.setInverted(driveMotorReversed);
         turningMotor.setInverted(turningMotorReversed);
 
-        driveEncoder = driveMotor.getEncoder();
-        turningEncoder = turningMotor.getEncoder();
+        //May or may not be important
+        //driveMotor.burnFlash();
+        //turningMotor.burnFlash();
+
+
+        driveEncoder = (CANCoder) driveMotor.getEncoder();
+        turningEncoder = (CANCoder) turningMotor.getEncoder();
 
         driveEncoder.setPositionConversionFactor(ModuleConstants.kDriveEncoderRot2Meter);
         driveEncoder.setVelocityConversionFactor(ModuleConstants.KdriveEncoderRPM2MeterPerSec);
@@ -51,7 +59,7 @@ public class SwerveModule {
 
         turningPidController = new PIDController(ModuleConstants.kPTurning, 0, 0);
         turningPidController.enableContinuousInput(-Math.PI, Math.PI);
-
+        
         resetEncoders();
     }
 
