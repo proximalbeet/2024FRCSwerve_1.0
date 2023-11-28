@@ -3,7 +3,6 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.sensors.CANCoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -42,19 +41,21 @@ public class SwerveModule {
         driveMotor.setInverted(driveMotorReversed);
         turningMotor.setInverted(turningMotorReversed);
 
-        //May or may not be important
-        //driveMotor.burnFlash();
-        //turningMotor.burnFlash();
+        
 
 
         driveEncoder = (CANCoder) driveMotor.getEncoder();
         turningEncoder = (CANCoder) turningMotor.getEncoder();
 
-        
+        //Depreciated Methods
         //driveEncoder.setPositionConversionFactor(ModuleConstants.kDriveEncoderRot2Meter);
-        //driveEncoder.setVelocityConversionFactor(ModuleConstants.KdriveEncoderRPM2MeterPerSec);
+        //driveEncoder.getVelocityConversionFactor(ModuleConstants.KdriveEncoderRPM2MeterPerSec);
         //turningEncoder.setPositionConversionFactor(ModuleConstants.kTurningEncoderRot2Rad);
         //turningEncoder.setVelocityConversionFactor(ModuleConstants.kTurningEncoderRPM2RadPerSec);
+
+        //May or may not be important
+        //driveMotor.burnFlash();
+        //turningMotor.burnFlash();
 
         turningPidController = new PIDController(ModuleConstants.kPTurning, 0, 0);
         turningPidController.enableContinuousInput(-Math.PI, Math.PI);
