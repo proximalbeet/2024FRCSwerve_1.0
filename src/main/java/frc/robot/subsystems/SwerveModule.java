@@ -1,9 +1,9 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.sensors.CANCoder;
-import com.ctre.phoenixpro.hardware.CANcoder;
+//import com.ctre.phoenixpro.hardware.CANcoder;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
+//import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -52,10 +52,11 @@ public class SwerveModule {
         driveEncoder = (CANCoder) driveMotor.getEncoder();
         turningEncoder = (CANCoder) turningMotor.getEncoder();
 
-        driveEncoder.setPositionConversionFactor(ModuleConstants.kDriveEncoderRot2Meter);
-        driveEncoder.setVelocityConversionFactor(ModuleConstants.KdriveEncoderRPM2MeterPerSec);
-        turningEncoder.setPositionConversionFactor(ModuleConstants.kTurningEncoderRot2Rad);
-        turningEncoder.setVelocityConversionFactor(ModuleConstants.kTurningEncoderRPM2RadPerSec);
+        
+        //driveEncoder.setPositionConversionFactor(ModuleConstants.kDriveEncoderRot2Meter);
+        //driveEncoder.setVelocityConversionFactor(ModuleConstants.KdriveEncoderRPM2MeterPerSec);
+        //turningEncoder.setPositionConversionFactor(ModuleConstants.kTurningEncoderRot2Rad);
+        //turningEncoder.setVelocityConversionFactor(ModuleConstants.kTurningEncoderRPM2RadPerSec);
 
         turningPidController = new PIDController(ModuleConstants.kPTurning, 0, 0);
         turningPidController.enableContinuousInput(-Math.PI, Math.PI);

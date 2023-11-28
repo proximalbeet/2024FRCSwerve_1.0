@@ -1,10 +1,10 @@
 package frc.robot.subsystems;
 import com.ctre.phoenix.sensors.Pigeon2;
-//import edu.wpi.first.wpilibj.interfaces;
+//import edu.wpi.first.wpilibj.interfaces.*;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.SPI;
+//import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
@@ -62,11 +62,16 @@ public class SwerveSubsystem extends SubsystemBase {
     }
 
     public void zeroHeading(){
-        gyro.reset();
+        // Find out if this has changed to some other method
+        //gyro.reset();
+        gyro.configFactoryDefault();
+        
+        
     }
 
     public static double getHeading(){
-        return Math.IEEEremainder(gyro.getAngle(), 360);
+        return gyro.getCompassHeading(); // This is a guess at a replacement for below
+        //return Math.IEEEremainder(gyro.getAngle(), 360);
     }
 
     public static Rotation2d getRotation2d(){
