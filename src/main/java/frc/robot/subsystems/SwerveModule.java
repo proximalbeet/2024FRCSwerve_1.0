@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.sensors.CANCoder;
+//import com.ctre.phoenix.sensors.CANCoder;
+import com.revrobotics.*;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.math.controller.PIDController;
@@ -19,8 +20,10 @@ public class SwerveModule {
     private final CANSparkMax turningMotor;
 
     //Encoders
-    private final CANCoder driveEncoder;
-    private final CANCoder turningEncoder;
+    //CANCoder Is Depreciated
+    private final RelativeEncoder driveEncoder;
+    private final RelativeEncoder turningEncoder;
+ 
 
     private final PIDController turningPidController;
 
@@ -44,8 +47,8 @@ public class SwerveModule {
         
 
 
-        driveEncoder = (CANCoder) driveMotor.getEncoder();
-        turningEncoder = (CANCoder) turningMotor.getEncoder();
+        driveEncoder =  driveMotor.getEncoder();
+        turningEncoder =  turningMotor.getEncoder();
 
         //Depreciated Methods
         //driveEncoder.setPositionConversionFactor(ModuleConstants.kDriveEncoderRot2Meter);
